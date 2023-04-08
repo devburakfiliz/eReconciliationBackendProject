@@ -35,7 +35,6 @@ namespace Core.DataAccess.EntityFramework
 
         public TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
-
             using (var context = new TContext())
             {
                 return context.Set<TEntity>().SingleOrDefault(filter);
@@ -50,6 +49,11 @@ namespace Core.DataAccess.EntityFramework
                     ? context.Set<TEntity>().ToList()
                     : context.Set<TEntity>().Where(filter).ToList();
             }
+        }
+
+        public List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(TEntity entity)
