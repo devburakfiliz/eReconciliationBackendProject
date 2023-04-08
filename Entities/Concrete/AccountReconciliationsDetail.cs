@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entities.Concrete
 {
-    public class AccountReconciliatiınsDetail :IEntity
+    public class AccountReconciliationsDetail :IEntity
     {
         public int Id { get; set; }         
         public int AccountReconciliationId { get; set; }
