@@ -13,8 +13,7 @@ namespace DataAccess.Concrete.EntityFramework.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=BURAK;Database=eReconciliationDb; Integrated
-                Security=true");
+            optionsBuilder.UseSqlServer(@"Server=BURAK;Database=eReconciliationDb; Trusted_Connection=True");
         }
         public DbSet<AccountReconciliationsDetail> accountReconciliatiınsDetails { get; set; }
         public DbSet<AccountReconciliation> AccountReconciliations { get; set; }

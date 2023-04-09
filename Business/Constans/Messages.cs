@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Business.Constans
 {
-    public class Message
+    public static class Messages
     {
         public static string AddedCompany="Şirket Kaydı Başarıyla Tamamlandı";
         public static string DeletedCompany="Şirket Kaydı Başarıyla Silindi";
