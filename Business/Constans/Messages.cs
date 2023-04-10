@@ -13,5 +13,12 @@ namespace Business.Constans
         public static string UpdatedCompany="Şirket Kaydı Başarıyla Güncellendi";
         public static string GetCompany="Şirket Kaydı Başarıyla Getirildi";
         public static string GetCompanies="Şirketler Başarıyla Getirildi";
+
+
+
+        public static string UserNatFound = "Kullanıcı Bulunamadı.";
+
+
+
     }
 }
