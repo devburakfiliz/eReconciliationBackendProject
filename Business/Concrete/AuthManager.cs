@@ -20,12 +20,16 @@ namespace Business.Concrete
         private readonly IUserService _userService;
         private readonly ITokenHelper _tokenHelper;
         private readonly ICompanyService _companyService;
+        private readonly IMailParameterService _mailParameterService;
+        private readonly IMailService _mailService;
 
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper,ICompanyService companyService)
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper,ICompanyService companyService,IMailParameterService mailParameterService,IMailService mailService)
         {
             _userService = userService;
             _tokenHelper = tokenHelper; 
             _companyService = companyService;
+            _mailParameterService = mailParameterService;
+            _mailService = mailService;
 
         }
 
@@ -115,6 +119,17 @@ namespace Business.Concrete
                 PasswordSalt = user.PasswordSalt,
 
             };
+
+            var mailParameter = _mailParameterService.Get(3);
+            SendMailDto sendMailDto = new SendMailDto()
+            {
+                mailParameter = mailParameter.Data,
+                email = user.Email,
+                subject = "Kullanıcı Onay maili",
+                body = "Kullanıcınız sisteme kayıt oldu. Kaydınızı tamamlamak için aşağıdaki linke tıklamanız gerekmektedir."
+            };
+
+            _mailService.SendMail(sendMailDto);
 
             return new SuccessDataResult<UserCompanyDto>(userCompanyDto, "Kayıt oldu");
         }
