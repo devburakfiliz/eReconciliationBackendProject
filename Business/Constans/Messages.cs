@@ -19,6 +19,11 @@ namespace Business.Constans
         public static string UserNatFound = "Kullanıcı Bulunamadı.";
 
 
+        public static string MailTemplateUpdated = "Mail Şablonu başarıyla Güncellendi";
+        public static string MailTemplateAdded = "Mail Şablonu başarıyla Eklendi.";
+        public static string MailTemplateDeleted = "Mail Şablonu başarıyla silindi.";
+
+
 
     }
 }

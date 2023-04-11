@@ -22,14 +22,16 @@ namespace Business.Concrete
         private readonly ICompanyService _companyService;
         private readonly IMailParameterService _mailParameterService;
         private readonly IMailService _mailService;
+        private readonly IMailTemplateService _mailTemplateService;
 
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper,ICompanyService companyService,IMailParameterService mailParameterService,IMailService mailService)
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper,ICompanyService companyService,IMailParameterService mailParameterService,IMailService mailService,IMailTemplateService mailTemplateService)
         {
             _userService = userService;
             _tokenHelper = tokenHelper; 
             _companyService = companyService;
             _mailParameterService = mailParameterService;
             _mailService = mailService;
+            _mailTemplateService = mailTemplateService;
 
         }
 
@@ -120,13 +122,29 @@ namespace Business.Concrete
 
             };
 
+            string subject = "Kullanıcı Kayıt Onay Maili";
+
+            string body = "Kullanıcınız sisteme kayıt oldu. Kaydınızı tamamlamak için aşağıdaki linke tıklamanız gerekmektedir.";
+
+            string link = "https://github.com/devburakfiliz";
+            string linkDescription = "Kayıt olmak için tıklayın.";
+
+
+            var mailTemplate = _mailTemplateService.GetByTemplateName("Kayıt", 3);
+            string templateBody = mailTemplate.Data.Value;
+            templateBody = templateBody.Replace("{{title}}", subject);
+            templateBody = templateBody.Replace("{{message}}", body);
+            templateBody = templateBody.Replace("{{link}}", link);
+            templateBody = templateBody.Replace("{{linkDescription}}", linkDescription);
+
+
             var mailParameter = _mailParameterService.Get(3);
             SendMailDto sendMailDto = new SendMailDto()
             {
                 mailParameter = mailParameter.Data,
                 email = user.Email,
-                subject = "Kullanıcı Onay maili",
-                body = "Kullanıcınız sisteme kayıt oldu. Kaydınızı tamamlamak için aşağıdaki linke tıklamanız gerekmektedir."
+                subject = "Kullanıcı Kayıt Onay Maili",
+                body = templateBody
             };
 
             _mailService.SendMail(sendMailDto);
