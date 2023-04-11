@@ -12,5 +12,5 @@
 
 -Sending a confirmation e-mail to the user's e-mail address in order for the registration to be active.
 
+![Ekran görüntüsü 2023-04-12 011608](https://user-images.githubusercontent.com/110422737/231301104-f0d971d4-6663-403f-b25e-1eafe11452ac.png)
 
-![Ekran görüntüsü 2023-04-12 001947](https://user-images.githubusercontent.com/110422737/231291604-5da26810-26de-4181-bead-dbc5137094d7.png)
