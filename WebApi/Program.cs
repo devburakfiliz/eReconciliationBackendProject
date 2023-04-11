@@ -28,7 +28,7 @@ builder.Services.AddControllers();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowOrigin",
-        builder => builder.WithOrigins("https://localhost:4200"));
+        builder => builder.WithOrigins("https://localhost:7043"));
 });
 
 var tokenOptions = configuration.GetSection("TokenOptions").Get<TokenOptions>();
