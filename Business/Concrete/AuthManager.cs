@@ -59,6 +59,9 @@ namespace Business.Concrete
         }
 
 
+      
+
+
         public IDataResult<User> RegisterSecondAccount(UserForRegister userForRegister, string password)
         {
             byte[] passwordHash, passwordSalt;
@@ -126,7 +129,7 @@ namespace Business.Concrete
 
             string body = "Kullanıcınız sisteme kayıt oldu. Kaydınızı tamamlamak için aşağıdaki linke tıklamanız gerekmektedir.";
 
-            string link = "https://github.com/devburakfiliz";
+            string link = "https://localhost:7043/api/Auth/confirmuser?value=" + user.MailConfirmValue;
             string linkDescription = "Kayıt olmak için tıklayın.";
 
 
@@ -170,6 +173,17 @@ namespace Business.Concrete
                 return new ErrorResult("Bu şirket daha önce kayıt edilmiş.");
             }
             return new SuccessResult();
+        }
+
+        public IDataResult<User> GetByMailConfirmValue(string value)
+        {
+            return new SuccessDataResult<User>(_userService.GetByMailComfirmValue(value));
+        }
+
+        public IResult Update(User user)
+        {
+            _userService.Update(user);
+            return new SuccessResult("Mail doğrulama başarıyla tamamlandı.");
         }
     }
     

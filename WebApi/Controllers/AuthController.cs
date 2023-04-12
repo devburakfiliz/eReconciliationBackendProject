@@ -73,5 +73,18 @@ namespace WebApi.Controllers
             }
             return BadRequest(result.Message);
         }
+        [HttpGet("confirmuser")]
+        public IActionResult ComfirmUser(string value) 
+        {
+            var user = _authService.GetByMailConfirmValue(value).Data;
+            user.MailConfirm = true;
+            user.MailConfirmDate = DateTime.Now;
+            var result =_authService.Update(user);
+            if (result.Success)
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
     }
 }

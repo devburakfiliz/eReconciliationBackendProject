@@ -16,7 +16,9 @@ namespace Business.Abstract
         IDataResult<UserCompanyDto> Register(UserForRegister userForRegister,string password,Company company);
         IDataResult<User> RegisterSecondAccount(UserForRegister userForRegister,string password);
         IDataResult<User> Login(UserForLogin userForLogin);
+        IDataResult<User> GetByMailConfirmValue(string value);
         IResult UserExists(string email);
+        IResult Update(User user);
         IResult CompanyExists(Company company);
         IDataResult<AccessToken> CreateAccessToken(User user, int companyId);
     }
