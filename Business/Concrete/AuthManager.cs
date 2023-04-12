@@ -124,7 +124,14 @@ namespace Business.Concrete
                 PasswordSalt = user.PasswordSalt,
 
             };
+            SendConfirmEmail(user);
 
+
+            return new SuccessDataResult<UserCompanyDto>(userCompanyDto, "Kayıt oldu");
+        }
+
+        void SendConfirmEmail(User user)
+        {
             string subject = "Kullanıcı Kayıt Onay Maili";
 
             string body = "Kullanıcınız sisteme kayıt oldu. Kaydınızı tamamlamak için aşağıdaki linke tıklamanız gerekmektedir.";
@@ -151,8 +158,9 @@ namespace Business.Concrete
             };
 
             _mailService.SendMail(sendMailDto);
+            user.MailConfirmDate = DateTime.Now;
+            _userService.Update(user);
 
-            return new SuccessDataResult<UserCompanyDto>(userCompanyDto, "Kayıt oldu");
         }
 
         public IResult UserExists(string email)
@@ -184,6 +192,50 @@ namespace Business.Concrete
         {
             _userService.Update(user);
             return new SuccessResult("Mail doğrulama başarıyla tamamlandı.");
+        }
+
+        public IDataResult<User> GetById(int id)
+        {
+            return new SuccessDataResult<User>(_userService.GetById(id));
+
+        }
+
+        IResult IAuthService.SendConfirmEmail(User user)
+        {
+            if (user.MailConfirm ==true)
+            {
+                return new ErrorResult("Mail Onayı daha önce yapılmış tekrar onay maili alamazsınız.");
+            }
+
+            DateTime confirimMailDate = user.MailConfirmDate;
+            DateTime now = DateTime.Now;
+
+            if (confirimMailDate.AddMinutes(5)< now)
+            {
+                SendConfirmEmail(user);
+                return new SuccessResult("Onay Maili Tekrar Gönderildi.");
+            }
+            else
+            {
+                return new ErrorResult("Mail onayını 5 dakikada bir gönderebilirsiniz.");
+            }
+
+            //if (confirimMailDate.ToShortDateString() == now.ToShortDateString()) 
+            //{
+            //    if (confirimMailDate.Hour == now.Hour && confirimMailDate.AddMinutes(5).Minute <= now.Minute)
+            //    {
+            //        SendConfirmEmail(user);
+            //        return new SuccessResult("Onay Maili Tekrar Gönderildi.");
+            //    }
+            //    else
+            //    {
+            //        return new ErrorResult("Mail onayını 5 dakikada bir gönderebilirsiniz.");
+            //    }
+            //}
+            //SendConfirmEmail(user);
+            //return new SuccessResult("Onay Maili Tekrar Gönderildi.");
+
+
         }
     }
     

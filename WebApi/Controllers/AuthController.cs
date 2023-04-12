@@ -86,5 +86,18 @@ namespace WebApi.Controllers
             }
             return BadRequest();
         }
+
+        [HttpGet("sendconfirmEmail")]
+        public IActionResult SendConfirmEmail(int id)
+        {
+            var user = _authService.GetById(id).Data;
+            var result =_authService.SendConfirmEmail(user);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
     }
 }
