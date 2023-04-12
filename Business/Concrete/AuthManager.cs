@@ -88,6 +88,8 @@ namespace Business.Concrete
             SendConfirmEmail(user);
             return new SuccessDataResult<User>(user, "Kayıt oldu");
         }
+
+
         public IDataResult<UserCompanyDto> Register(UserForRegister userForRegister, string password,Company company)
         {
            
@@ -109,8 +111,8 @@ namespace Business.Concrete
 
             };
 
-            ValidationTool.Validate(new UserValidator(), user);
-            ValidationTool.Validate(new CompanyValidator(), company);
+            //ValidationTool.Validate(new UserValidator(), user);
+            //ValidationTool.Validate(new CompanyValidator(), company);
 
             _companyService.Add(company);
 
