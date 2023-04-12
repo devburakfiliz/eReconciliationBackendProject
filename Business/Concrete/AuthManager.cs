@@ -88,8 +88,6 @@ namespace Business.Concrete
             SendConfirmEmail(user);
             return new SuccessDataResult<User>(user, "Kayıt oldu");
         }
-
-
         public IDataResult<UserCompanyDto> Register(UserForRegister userForRegister, string password,Company company)
         {
            
