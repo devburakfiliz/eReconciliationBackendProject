@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constans;
+using Core.Entities.Concrete;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -37,6 +38,11 @@ namespace Business.Concrete
                 return new ErrorResult("Bu şirket daha önce kayıt edilmiş.");
             }
             return new SuccessResult();
+        }
+
+        public IDataResult<UserCompany> GetCompany(int userId)
+        {
+            return new SuccessDataResult<UserCompany>(_companyDal.GetCompany(userId));
         }
 
         public IDataResult<List<Company>> GetList()

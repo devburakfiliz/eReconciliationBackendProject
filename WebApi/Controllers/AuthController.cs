@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results.Concrete;
 using Entities.Concrete;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
@@ -17,15 +18,15 @@ namespace WebApi.Controllers
             _authService = authService;
         }
         [HttpPost("registerSecondAccount")]
-        public IActionResult RegisterSecondAccount(UserForRegister userForRegister, int companyId)
+        public IActionResult RegisterSecondAccount(UserForRegisterToSecondAccountDto userForRegister, int companyId)
         {
             var userExists = _authService.UserExists(userForRegister.Email);
             if (!userExists.Success)
             {
                 return BadRequest(userExists.Message);
             }
-            var registerResult = _authService.RegisterSecondAccount(userForRegister, userForRegister.Password);
-            var result = _authService.CreateAccessToken(registerResult.Data,companyId);
+            var registerResult = _authService.RegisterSecondAccount(userForRegister, userForRegister.Password, userForRegister.CompanyId);
+            var result = _authService.CreateAccessToken(registerResult.Data,userForRegister.CompanyId);
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -66,12 +67,25 @@ namespace WebApi.Controllers
             {
                 return BadRequest(userToLogin.Message);
             }
-            var result = _authService.CreateAccessToken(userToLogin.Data, 0);
-            if (result.Success)
+
+            if (userToLogin.Data.IsActive)
             {
-                return Ok(result.Data);
+
+                var userCompany = _authService.GetCompany(userToLogin.Data.Id).Data;
+                var result = _authService.CreateAccessToken(userToLogin.Data, userCompany.CompanyId ); 
+                if (result.Success)
+                {
+                    return Ok(result.Data);
+                }
+                return BadRequest(result.Message);
+
             }
-            return BadRequest(result.Message);
+
+                return BadRequest("Kullanıcı Pasif Durumda Pasif kullanıcılar sisteme giriş yapamaz  (Yöneticinize danışın)");
+
+
+
+
         }
         [HttpGet("confirmuser")]
         public IActionResult ComfirmUser(string value) 

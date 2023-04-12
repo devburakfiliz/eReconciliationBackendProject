@@ -62,7 +62,7 @@ namespace Business.Concrete
       
 
 
-        public IDataResult<User> RegisterSecondAccount(UserForRegister userForRegister, string password)
+        public IDataResult<User> RegisterSecondAccount(UserForRegister userForRegister, string password , int companyId)
         {
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -81,6 +81,8 @@ namespace Business.Concrete
 
             };
             _userService.Add(user);
+            _companyService.UserCompanyAdd(user.Id,companyId);
+            SendConfirmEmail(user);
             return new SuccessDataResult<User>(user, "Kayıt oldu");
         }
 
@@ -236,6 +238,11 @@ namespace Business.Concrete
             //return new SuccessResult("Onay Maili Tekrar Gönderildi.");
 
 
+        }
+
+        public IDataResult<UserCompany> GetCompany(int userId)
+        {
+            return new SuccessDataResult<UserCompany>(_companyService.GetCompany(userId).Data);
         }
     }
     
