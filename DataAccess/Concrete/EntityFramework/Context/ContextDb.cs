@@ -15,7 +15,7 @@ namespace DataAccess.Concrete.EntityFramework.Context
         {
             optionsBuilder.UseSqlServer(@"Server=BURAK;Database=eReconciliationDb; Trusted_Connection=True");
         }
-        public DbSet<AccountReconciliationsDetail> accountReconciliatiınsDetails { get; set; }
+        public DbSet<AccountReconciliationsDetail> AccountReconciliationsDetails { get; set; }
         public DbSet<AccountReconciliation> AccountReconciliations { get; set; }
         public DbSet<BaBsReconciliationDetail> BaBsReconciliationDetails { get; set; }
         public DbSet<BaBsReconciliation> BaBsReconciliations { get; set; }

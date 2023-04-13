@@ -1,6 +1,10 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using ExcelDataReader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +20,77 @@ namespace Business.Concrete
         public AccountReconciliationsDetailManager(IAccountReconciliationsDetailDal accountReconciliationsDetailDal)
         {
             _accountReconciliationsDetailDal = accountReconciliationsDetailDal;
+        }
+
+        public IResult Add(AccountReconciliationsDetail accountReconciliationDetail)
+        {
+            _accountReconciliationsDetailDal.Add(accountReconciliationDetail);
+            return new SuccessResult("Cari Mütabakat Detay Bilgisi Eklendi");
+        }
+
+        public IResult AddToExcel(string filePath, int accountReconciliationId)
+        {
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
+            using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    while (reader.Read())
+                    {
+                        string description = reader.GetString(1);
+
+
+
+                        if (description != "Açıklama" && description != null)
+                        {
+                            DateTime date = reader.GetDateTime(0);
+                            double currencyId = reader.GetDouble(2);
+                            double debit = reader.GetDouble(3);
+                            double credit = reader.GetDouble(4);
+
+
+                            AccountReconciliationsDetail accountReconciliationsDetail = new AccountReconciliationsDetail()
+                            {
+                                AccountReconciliationId = accountReconciliationId,
+                                Description = description,
+                                Date = date,
+                                CurrencyCredit = Convert.ToDecimal(credit),
+                                CurrencyDebit = Convert.ToDecimal(debit),
+                                CurrencyId = Convert.ToInt16(currencyId)
+                            };
+                             _accountReconciliationsDetailDal.Add(accountReconciliationsDetail);
+                        }
+                    }
+
+                }
+
+            }
+            File.Delete(filePath);
+            return new SuccessResult("Exceldeki cariler eklendi");
+        }
+
+        public IResult Delete(AccountReconciliationsDetail accountReconciliationDetail)
+        {
+            _accountReconciliationsDetailDal.Delete(accountReconciliationDetail);
+            return new SuccessResult("Cari Mütabakat Detay Bilgisi silindi");
+        }
+
+        public IDataResult<AccountReconciliationsDetail> GetById(int id)
+        {
+            return new SuccessDataResult<AccountReconciliationsDetail>(_accountReconciliationsDetailDal.Get(p=>p.Id == id));
+        }
+
+        public IDataResult<List<AccountReconciliationsDetail>> GetList(int accountReconciliationId)
+        {
+            return new SuccessDataResult<List<AccountReconciliationsDetail>>(_accountReconciliationsDetailDal.GetList(p => p.AccountReconciliationId == accountReconciliationId));
+
+        }
+
+        public IResult Update(AccountReconciliationsDetail accountReconciliationDetail)
+        {
+            _accountReconciliationsDetailDal.Update(accountReconciliationDetail);
+            return new SuccessResult("Cari Mütabakat Detay Bilgisi güncellendi");
         }
     }
 }
