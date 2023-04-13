@@ -15,6 +15,13 @@ namespace Business.Constans
         public static string GetCompanies="Şirketler Başarıyla Getirildi";
 
 
+        public static string AddedAccountReconciliation="Cari mutabakat kaydı başarıyla eklendi.";
+        public static string UpdatedAccountReconciliation= "Cari mutabakat kaydı başarıyla güncellendi.";
+        public static string DeletedAccountReconciliation= "Cari mutabakat kaydı başarıyla silindi.";
+
+
+        
+
 
         public static string UserNatFound = "Kullanıcı Bulunamadı.";
 
