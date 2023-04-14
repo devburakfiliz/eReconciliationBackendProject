@@ -17,10 +17,20 @@ namespace Business.Constans
 
         public static string AddedAccountReconciliation="Cari mutabakat kaydı başarıyla eklendi.";
         public static string UpdatedAccountReconciliation= "Cari mutabakat kaydı başarıyla güncellendi.";
-        public static string DeletedAccountReconciliation= "Cari mutabakat kaydı başarıyla silindi.";
+        public static string DeletedAccountReconciliation = "Cari mutabakat kaydı başarıyla silindi.";
 
 
-        
+
+        public static string AddedBaBsReconciliation = "BaBs kaydı başarıyla eklendi.";
+        public static string DeletedBaBsReconciliation = "BaBs kaydı başarıyla silindi.";
+        public static string UpdatedBaBsReconciliation = "BaBs kaydı başarıyla güncellendi.";
+
+        public static string AddedBaBsReconciliationDetail = "BaBs detay kaydı başarıyla eklendi.";
+        public static string DeletedBaBsReconciliationDetail = "BaBs detay kaydı başarıyla silindi.";
+        public static string UpdatedBaBsReconciliationDetail = "BaBs detay kaydı başarıyla güncellendi.";
+
+
+
 
 
         public static string UserNatFound = "Kullanıcı Bulunamadı.";
