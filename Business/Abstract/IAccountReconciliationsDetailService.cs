@@ -11,10 +11,10 @@ namespace Business.Abstract
     public interface IAccountReconciliationsDetailService
     {
         IResult Add(AccountReconciliationsDetail accountReconciliationDetail);
-        IResult AddToExcel(string filePath, int companyId);
+        IResult AddToExcel(string filePath, int accountReconciliationId);
         IResult Update(AccountReconciliationsDetail accountReconciliationDetail);
         IResult Delete(AccountReconciliationsDetail accountReconciliationDetail);
         IDataResult<AccountReconciliationsDetail> GetById(int id);
-        IDataResult<List<AccountReconciliationsDetail>> GetList(int companyId);
+        IDataResult<List<AccountReconciliationsDetail>> GetList(int accountReconciliationId);
     }
 }
