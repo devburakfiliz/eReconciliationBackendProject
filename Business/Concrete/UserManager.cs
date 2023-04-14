@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.ValidationRule.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Aspects.Caching;
 using Core.Entities.Concrete;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -21,33 +22,34 @@ namespace Business.Concrete
         {
             _userDal = userDal;
         }
+        [CacheRemoveAspect("IUserService.Get")]
         [ValidationAspect(typeof(UserValidator))]
         public void Add(User user)
         {
 
             _userDal.Add(user);
         }
-
+        [CacheAspect(60)]
         public User GetById(int id)
         {
             return _userDal.Get(u=>u.Id == id);
         }
-
+        [CacheAspect(60)]
         public User GetByMail(string mail)
         {
             return _userDal.Get(p=>p.Email==mail);
         }
-
+        [CacheAspect(60)]
         public User GetByMailComfirmValue(string value)
         {
             return _userDal.Get(p=> p.MailConfirmValue==value);
         }
-
+        [CacheAspect(60)]
         public List<OperationClaim> GetClaims(User user, int companyId  )
         {
             return _userDal.GetClaims(user, companyId);
         }
-
+        [CacheRemoveAspect("IUserService.Get")]
         public void Update(User user)
         {
            _userDal.Update(user);

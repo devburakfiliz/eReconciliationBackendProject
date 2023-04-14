@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Caching;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -22,13 +23,13 @@ namespace Business.Concrete
         {
             _accountReconciliationsDetailDal = accountReconciliationsDetailDal;
         }
-
+        [CacheRemoveAspect("IAccountReconciliationsDetailService.Get")]
         public IResult Add(AccountReconciliationsDetail accountReconciliationDetail)
         {
             _accountReconciliationsDetailDal.Add(accountReconciliationDetail);
             return new SuccessResult("Cari Mütabakat Detay Bilgisi Eklendi");
         }
-
+        [CacheRemoveAspect("IAccountReconciliationsDetailService.Get")]
         [TransactionScopeAspect]
         public IResult AddToExcel(string filePath, int accountReconciliationId)
         {
@@ -71,24 +72,24 @@ namespace Business.Concrete
             File.Delete(filePath);
             return new SuccessResult("Exceldeki cariler eklendi");
         }
-
+        [CacheRemoveAspect("IAccountReconciliationsDetailService.Get")]
         public IResult Delete(AccountReconciliationsDetail accountReconciliationDetail)
         {
             _accountReconciliationsDetailDal.Delete(accountReconciliationDetail);
             return new SuccessResult("Cari Mütabakat Detay Bilgisi silindi");
         }
-
+        [CacheAspect(60)]
         public IDataResult<AccountReconciliationsDetail> GetById(int id)
         {
             return new SuccessDataResult<AccountReconciliationsDetail>(_accountReconciliationsDetailDal.Get(p=>p.Id == id));
         }
-
+        [CacheAspect(60)]
         public IDataResult<List<AccountReconciliationsDetail>> GetList(int accountReconciliationId)
         {
             return new SuccessDataResult<List<AccountReconciliationsDetail>>(_accountReconciliationsDetailDal.GetList(p => p.AccountReconciliationId == accountReconciliationId));
 
         }
-
+        [CacheRemoveAspect("IAccountReconciliationsDetailService.Get")]
         public IResult Update(AccountReconciliationsDetail accountReconciliationDetail)
         {
             _accountReconciliationsDetailDal.Update(accountReconciliationDetail);

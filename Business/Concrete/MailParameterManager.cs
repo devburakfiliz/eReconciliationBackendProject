@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Aspects.Caching;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -19,12 +20,12 @@ namespace Business.Concrete
         {
             _mailParameterDal = mailParameterDal;
         }
-
+        [CacheAspect(60)]
         public IDataResult<MailParameter> Get(int companyId)
         {
             return new SuccessDataResult<MailParameter>(_mailParameterDal.Get(m=>m.CompanyId == companyId));
         }
-
+        [CacheRemoveAspect("IMailParameterService.Get")]
         public IResult Update(MailParameter mailParameter)
         {
             var result = Get(mailParameter.CompanyId);

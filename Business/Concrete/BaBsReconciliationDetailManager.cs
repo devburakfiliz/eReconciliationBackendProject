@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Caching;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -22,13 +23,13 @@ namespace Business.Concrete
         {
             _baBsReconciliationDetailDal = baBsReconciliationDetailDal;
         }
-
+        [CacheRemoveAspect("IBaBsReconciliationDetailService.Get")]
         public IResult Add(BaBsReconciliationDetail baBsReconciliationDetail)
         {
             _baBsReconciliationDetailDal.Add(baBsReconciliationDetail);
             return new SuccessResult("Cari Mütabakat Detay Bilgisi Eklendi");
         }
-
+        [CacheRemoveAspect("IBaBsReconciliationDetailService.Get")]
         [TransactionScopeAspect]
         public IResult AddToExcel(string filePath, int babsReconciliationId)
         {
@@ -69,23 +70,23 @@ namespace Business.Concrete
             File.Delete(filePath);
             return new SuccessResult("Exceldeki cariler eklendi");
         }
-
+        [CacheRemoveAspect("IBaBsReconciliationDetailService.Get")]
         public IResult Delete(BaBsReconciliationDetail baBsReconciliationDetail)
         {
             _baBsReconciliationDetailDal.Delete(baBsReconciliationDetail);
             return new SuccessResult("Cari Mütabakat Detay Bilgisi silindi");
         }
-
+        [CacheAspect(60)]
         public IDataResult<BaBsReconciliationDetail> GetById(int id)
         {
             return new SuccessDataResult<BaBsReconciliationDetail>(_baBsReconciliationDetailDal.Get(p => p.Id == id));
         }
-
+        [CacheAspect(60)]
         public IDataResult<List<BaBsReconciliationDetail>> GetList(int babsReconciliationId)
         {
             return new SuccessDataResult<List<BaBsReconciliationDetail>>(_baBsReconciliationDetailDal.GetList(p => p.BaBsReconciliationId == babsReconciliationId));
         }
-
+        [CacheRemoveAspect("IBaBsReconciliationDetailService.Get")]
         public IResult Update(BaBsReconciliationDetail baBsReconciliationDetail)
         {
             _baBsReconciliationDetailDal.Update(baBsReconciliationDetail);
