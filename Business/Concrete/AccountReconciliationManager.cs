@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect;
 using Business.Constans;
 using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Caching;
@@ -26,7 +27,7 @@ namespace Business.Concrete
             _accountReconciliationDal = accountReconciliationDal;
             _currencyAccountService = currencyAccountService;
         }
-
+        [SecuredOperation("AccountReconciliation.Add")]
         [CacheRemoveAspect("IAccountReconciliationService.Get")]
         public IResult Add(AccountReconciliation accountReconciliation)
         {

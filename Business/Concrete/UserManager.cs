@@ -44,7 +44,6 @@ namespace Business.Concrete
         {
             return _userDal.Get(p=> p.MailConfirmValue==value);
         }
-        [CacheAspect(60)]
         public List<OperationClaim> GetClaims(User user, int companyId  )
         {
             return _userDal.GetClaims(user, companyId);
