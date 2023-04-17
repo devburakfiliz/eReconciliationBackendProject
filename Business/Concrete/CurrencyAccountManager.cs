@@ -3,6 +3,7 @@ using Business.ValidationRule.FluentValidation;
 using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Aspects.Caching;
+using Core.Aspects.Performance;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -26,10 +27,13 @@ namespace Business.Concrete
         {
             _currencyAccountDal = currencyAccountDal;
         }
+
+        [PerformanceAspect(3)]
         [CacheRemoveAspect("ICurrencyAccountService.Get")]
         [ValidationAspect(typeof(CurrencyAccountValidator))]
         public IResult Add(CurrencyAccount currencyAccount)
         {
+            Thread.Sleep(5000);
             _currencyAccountDal.Add(currencyAccount);
             return new SuccessResult("Cari kaydı oluşturuldu.");
         }
