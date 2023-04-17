@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect;
 using Business.Constans;
 using Core.Aspects.Caching;
+using Core.Aspects.Performance;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -21,23 +23,34 @@ namespace Business.Concrete
         {
             _mailTemplateDal = mailTemplateDal;
         }
+
+        [PerformanceAspect(3)]
+        [SecuredOperation("MailTemplate.Add")]
         [CacheRemoveAspect("IMailTemplateService.Get")]
         public IResult Add(MailTemplate mailTemplate)
         {
             _mailTemplateDal.Add(mailTemplate);
             return new SuccessResult(Messages.MailTemplateAdded);
         }
+
+        [PerformanceAspect(3)]
+        [SecuredOperation("MailTemplate.Delete")]
         [CacheRemoveAspect("IMailTemplateService.Get")]
         public IResult Delete(MailTemplate mailTemplate)
         {
             _mailTemplateDal.Delete(mailTemplate);
             return new SuccessResult(Messages.MailTemplateDeleted);
         }
+
+        [PerformanceAspect(3)]
         [CacheAspect(60)]
         public IDataResult<MailTemplate> Get(int id)
         {
            return new SuccessDataResult<MailTemplate>(_mailTemplateDal.Get(m=>m.Id == id));
         }
+
+        [PerformanceAspect(3)]
+        [SecuredOperation("MailTemplate.GetList")]
         [CacheAspect(60)]
         public IDataResult<List<MailTemplate>> GetAll(int companyId)
         {
@@ -48,6 +61,9 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<MailTemplate>(_mailTemplateDal.Get(m => m.Type == name && m.CompanyId == companyId));
         }
+
+        [PerformanceAspect(3)]
+        [SecuredOperation("MailTemplate.Update")]
         [CacheRemoveAspect("IMailTemplateService.Get")]
         public IResult Update(MailTemplate mailTemplate)
         {
