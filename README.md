@@ -15,8 +15,11 @@
 ![Ekran görüntüsü 2023-04-12 011608](https://user-images.githubusercontent.com/110422737/231301104-f0d971d4-6663-403f-b25e-1eafe11452ac.png)
 
 
--Sending reconciliation mails
+Sending performance reports by e-mail
 
 ![Ekran görüntüsü 2023-04-17 115833](https://user-images.githubusercontent.com/110422737/232768160-d08db02f-16a7-465a-ba22-aa6b1f019af6.png)
 
-  
+--Sending reconciliation mails  
+
+![Ekran görüntüsü 2023-04-18 144817](https://user-images.githubusercontent.com/110422737/232768387-8ddabfb2-f6d5-4934-bda0-9d93579db692.png)
+
