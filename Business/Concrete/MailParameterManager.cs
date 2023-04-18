@@ -31,7 +31,7 @@ namespace Business.Concrete
         }
 
         [PerformanceAspect(3)]
-        [SecuredOperation("MailParameter.Update")]
+        [SecuredOperation("MailParameter.Update,Admin")]
         [CacheRemoveAspect("IMailParameterService.Get")]
         public IResult Update(MailParameter mailParameter)
         {

@@ -25,7 +25,7 @@ namespace Business.Concrete
         }
 
         [PerformanceAspect(3)]
-        [SecuredOperation("MailTemplate.Add")]
+        [SecuredOperation("MailTemplate.Add,Admin")]
         [CacheRemoveAspect("IMailTemplateService.Get")]
         public IResult Add(MailTemplate mailTemplate)
         {
@@ -34,7 +34,7 @@ namespace Business.Concrete
         }
 
         [PerformanceAspect(3)]
-        [SecuredOperation("MailTemplate.Delete")]
+        [SecuredOperation("MailTemplate.Delete,Admin")]
         [CacheRemoveAspect("IMailTemplateService.Get")]
         public IResult Delete(MailTemplate mailTemplate)
         {
@@ -50,7 +50,7 @@ namespace Business.Concrete
         }
 
         [PerformanceAspect(3)]
-        [SecuredOperation("MailTemplate.GetList")]
+        [SecuredOperation("MailTemplate.GetList,Admin")]
         [CacheAspect(60)]
         public IDataResult<List<MailTemplate>> GetAll(int companyId)
         {
@@ -63,7 +63,7 @@ namespace Business.Concrete
         }
 
         [PerformanceAspect(3)]
-        [SecuredOperation("MailTemplate.Update")]
+        [SecuredOperation("MailTemplate.Update,Admin")]
         [CacheRemoveAspect("IMailTemplateService.Get")]
         public IResult Update(MailTemplate mailTemplate)
         {

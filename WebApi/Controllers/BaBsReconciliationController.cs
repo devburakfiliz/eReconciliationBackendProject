@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -61,9 +62,9 @@ namespace WebApi.Controllers
             return BadRequest(result.Message);
         }
         [HttpGet("getList")]
-        public IActionResult GetList(int companyId)
+        public IActionResult GetListDto(int companyId)
         {
-            var result = _baBsReconciliationService.GetList(companyId);
+            var result = _baBsReconciliationService.GetListDto(companyId);
             if (result.Success)
             {
                 return Ok(result);
@@ -93,6 +94,29 @@ namespace WebApi.Controllers
             }
             return BadRequest("Dosya Seçimi yapmadınız");
 
+        }
+
+        [HttpPost("sendReconciliationMail")]
+        public IActionResult SendReconciliationMail(BaBsReconciliationDto baBsReconciliationDto)
+        {
+            var result = _baBsReconciliationService.SendReconciliationMail(baBsReconciliationDto);
+            if (result.Success)
+            {
+                return Ok(result);
+
+            }
+            return BadRequest(result.Message);
+        }
+        [HttpGet("getByCode")]
+        public IActionResult GetByCode(string code)
+        {
+            var result = _baBsReconciliationService.GetByCode(code);
+            if (result.Success)
+            {
+                return Ok(result);
+
+            }
+            return BadRequest(result.Message);
         }
     }
 }

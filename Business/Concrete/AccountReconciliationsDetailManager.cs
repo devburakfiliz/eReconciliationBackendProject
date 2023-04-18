@@ -26,7 +26,7 @@ namespace Business.Concrete
             _accountReconciliationsDetailDal = accountReconciliationsDetailDal;
         }
         [PerformanceAspect(3)]
-        [SecuredOperation("AccountReconciliationsDetail.Add")]
+        [SecuredOperation("AccountReconciliationsDetail.Add,Admin")]
         [CacheRemoveAspect("IAccountReconciliationsDetailService.Get")]
         public IResult Add(AccountReconciliationsDetail accountReconciliationDetail)
         {
@@ -36,7 +36,7 @@ namespace Business.Concrete
 
 
         [PerformanceAspect(3)]
-        [SecuredOperation("AccountReconciliationsDetail.Add")]
+        [SecuredOperation("AccountReconciliationsDetail.Add,Admin")]
         [CacheRemoveAspect("IAccountReconciliationsDetailService.Get")]
         [TransactionScopeAspect]
         public IResult AddToExcel(string filePath, int accountReconciliationId)
@@ -82,7 +82,7 @@ namespace Business.Concrete
         }
 
         [PerformanceAspect(3)]
-        [SecuredOperation("AccountReconciliationsDetail.Delete")]
+        [SecuredOperation("AccountReconciliationsDetail.Delete,Admin")]
         [CacheRemoveAspect("IAccountReconciliationsDetailService.Get")]
         public IResult Delete(AccountReconciliationsDetail accountReconciliationDetail)
         {
@@ -92,7 +92,7 @@ namespace Business.Concrete
 
 
         [PerformanceAspect(3)]
-        [SecuredOperation("AccountReconciliationsDetail.Get")]
+        [SecuredOperation("AccountReconciliationsDetail.Get,Admin")]
         [CacheAspect(60)]
         public IDataResult<AccountReconciliationsDetail> GetById(int id)
         {
@@ -100,7 +100,7 @@ namespace Business.Concrete
         }
 
         [PerformanceAspect(3)]
-        [SecuredOperation("AccountReconciliationsDetail.GetList")]
+        [SecuredOperation("AccountReconciliationsDetail.GetList,Admin")]
         [CacheAspect(60)]
         public IDataResult<List<AccountReconciliationsDetail>> GetList(int accountReconciliationId)
         {
@@ -110,7 +110,7 @@ namespace Business.Concrete
 
 
         [PerformanceAspect(3)]
-        [SecuredOperation("AccountReconciliationsDetail.Update")]
+        [SecuredOperation("AccountReconciliationsDetail.Update,Admin")]
         [CacheRemoveAspect("IAccountReconciliationsDetailService.Get")]
         public IResult Update(AccountReconciliationsDetail accountReconciliationDetail)
         {
