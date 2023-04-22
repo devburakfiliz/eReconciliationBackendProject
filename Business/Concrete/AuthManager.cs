@@ -43,7 +43,7 @@ namespace Business.Concrete
         {
             var claims = _userService.GetClaims(user,companyId);
             var accessToken = _tokenHelper.CreateToken(user, claims,companyId);
-            return new SuccessDataResult<AccessToken>(accessToken, "Token olusturuldu");
+            return new SuccessDataResult<AccessToken>(accessToken, "Giriş Başarılı");
         }
 
         public IDataResult<User> Login(UserForLogin userForLogin)
